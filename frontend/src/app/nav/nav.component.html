@@ -1,0 +1,13 @@
+<!-- <h1 id="title"><span routerLink="/login">Login</span> to see your history</h1> -->
+<nav class="navbar">
+    <ul class="navbar-links">
+        <li routerLink="/">Calculator</li>
+        <li routerLink="/history">History</li>
+        @if (!isLoggedIn) {
+            <li routerLink="/login">Login</li>
+            <li routerLink="/register">Register</li>
+        }@else {
+            <li (click)="logout()">Logout</li>
+        }
+    </ul>
+</nav>

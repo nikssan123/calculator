@@ -1,0 +1,24 @@
+* {
+    box-sizing: border-box;
+}
+
+.main {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1c1c1c;
+    color: white;
+}
+
+#title span {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#title span:hover {
+    color: #828282;
+}
+

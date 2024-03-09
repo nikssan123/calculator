@@ -1,0 +1,27 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "target": "es6",
+      "noImplicitAny": true,
+      "moduleResolution": "node",
+      "sourceMap": true,
+      "outDir": "dist",
+      "baseUrl": ".",
+      "paths": {
+          "*": [
+              "node_modules/*",
+              "tests/*",
+              "client/*"
+          ]
+      },
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "types": [
+        "node"
+      ]
+  }
+  }
+  

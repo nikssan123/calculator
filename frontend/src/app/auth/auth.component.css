@@ -1,0 +1,50 @@
+.container {
+    width: 30vw;
+    height: 60vh;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    text-align: center;
+}
+
+.form input {
+    align-self: stretch;
+    background-color: #363636;
+    outline: none;
+    border: none;
+    box-shadow: 2px 2px black;
+    margin-top: 5px;
+    height: 40px;
+    color: white;
+    font-size: 25px;
+}
+
+.form label {
+   font-size: 20px;
+}
+
+#submit {
+    margin-top: 15px;
+    background-color: #ff9500;
+    height: 45px;
+}
+
+#submit:hover {
+    cursor: pointer;
+    background-color: #ffaa33;
+}
+
+.form .control {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+}
+

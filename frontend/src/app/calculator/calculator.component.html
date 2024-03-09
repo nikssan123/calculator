@@ -1,0 +1,29 @@
+<div class="calculator">
+    <div class="screen">{{currValue}}</div>
+    <div class="row">
+        <div class="number" (click)="pickNumber('1')">1</div>
+        <div class="number" (click)="pickNumber('2')">2</div>
+        <div class="number" (click)="pickNumber('3')">3</div>
+        <div class="number action" (click)="action(Actions.DIV)">/</div>
+    </div>
+    <div class="row">
+        <div class="number" (click)="pickNumber('4')">4</div>
+        <div class="number" (click)="pickNumber('5')">5</div>
+        <div class="number" (click)="pickNumber('6')">6</div>
+        <div class="number action" (click)="action(Actions.MULT)">*</div>
+    </div>
+    <div class="row">
+        <div class="number" (click)="pickNumber('7')">7</div>
+        <div class="number" (click)="pickNumber('8')">8</div>
+        <div class="number" (click)="pickNumber('9')">9</div>
+        <div class="number action" (click)="action(Actions.ADD)">+</div>
+    </div>
+    <div class="row">
+        <!-- TODO: handle float nums -->
+        <div class="number" (click)="pickNumber('.')">.</div>
+        <div class="number" id="zero" (click)="pickNumber('0')">0</div>
+        <div class="delete action" (click)="action('del')">C</div>
+        <div class="number action" (click)="action(Actions.SUB)">-</div>
+    </div>
+    <div class="calculate action" (click)="action(Actions.CALC)">=</div>
+</div>

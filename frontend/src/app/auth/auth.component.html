@@ -1,0 +1,31 @@
+<div class="container">
+    @if (register) {
+        <h2 class="title">Register to save your history</h2>
+    } @else {
+        <h2 class="title">Login to your account</h2>
+    }
+    <form class="form" [formGroup]="form">
+        @if(error.invalid){
+            <div>All fields are required</div>
+        }@else if (error.api) {
+            <div>Wrong email or password</div>
+        }
+        <div class="control">
+            <label for="email">Email</label>
+            <input type="text" name="email" formControlName="email">
+        </div>
+        @if (register) {
+            <div class="control">
+                <label for="username">Username</label>
+                <input type="test" name="username" formControlName="username">
+            </div>
+        }
+
+        <div class="control">
+            <label for="password">Password</label>
+            <input type="password" name="password" formControlName="password">
+        </div>
+
+        <input id="submit" type="submit" value="Login" (click)="onSubmit($event)">
+    </form>
+</div>
