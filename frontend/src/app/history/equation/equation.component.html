@@ -1,0 +1,12 @@
+<div class="container">
+    @for (equation of equations; track $index) {
+        <div class="equation">
+            <span>{{$index + 1}}.</span> <span>{{equation}}</span>
+        </div>
+        
+    } @empty { 
+        <div class="empty-msg">
+            <p>You don't have any equations saved!</p>
+        </div>
+    }
+</div>

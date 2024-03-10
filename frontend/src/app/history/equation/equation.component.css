@@ -1,0 +1,22 @@
+.container {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.equation {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    /* padding: 0px 20px;/ */
+}
+
+.equation span{
+    margin: 0px 20px;
+}
+
+.empty-msg {
+    text-align: center;
+}

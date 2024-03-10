@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { AuthService } from "../services/auth.service";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
   imports: [ ReactiveFormsModule ],
   templateUrl: './auth.component.html',
-  styleUrl: './auth.component.css',
-  providers: [AuthService]
+  styleUrl: './auth.component.css'
 })
 export class AuthComponent {
   error = {
@@ -19,7 +19,13 @@ export class AuthComponent {
   register = false;
   form: FormGroup;
 
-  constructor(private service: AuthService, fb: FormBuilder, private router: Router, private route: ActivatedRoute){
+  constructor(
+    private service: AuthService,
+    fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location
+  ){
     service.login({email: "test@gmail.com", password: "123"});
 
     if(this.route.snapshot.url[0].path === "register"){
@@ -46,33 +52,55 @@ export class AuthComponent {
 
     const { email, password } = this.form.value;
     if(this.register){
+      if(this.form.controls['email'].invalid
+        || this.form.controls['password'].invalid
+        || this.form.controls['username'].invalid
+      ){
+        this.error.invalid = true;
+        return;
+      }
+
       this.service.register({
         email,
         password,
         username: this.form.value.username
       }).subscribe({
-        next: () => {
+        next: (res) => {
+          this.service.setUser(res);
           this.router.navigateByUrl("");
         },
-        error: e => {
-          console.log(e)
+        error: () => {
+          this.error.api = true;
         }
       });
     }else{
+      if(this.form.controls['email'].invalid
+        || this.form.controls['password'].invalid
+      ){
+        this.error.invalid = true;
+        return;
+      }
+
       this.service.login({
         email,
         password
       }).subscribe({
-        next: () => {
-          console.log("success")
-          this.router.navigateByUrl("");
+        next: (res) => {
+          this.service.setUser(res);
+          this.location.back();
         },
-        error: e => {
-          console.log("uha")
-          console.log(e)
+        error: () => {
+          this.error.api = true;
         }
       });
     }
-    
+  }
+
+  goToLogin() {
+    this.router.navigateByUrl("/login");
+  }
+
+  goToRegister() {
+    this.router.navigateByUrl("/register");
   }
 }

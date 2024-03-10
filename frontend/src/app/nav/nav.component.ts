@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -7,30 +7,24 @@ import { AuthService } from '../services/auth.service';
   standalone: true,
   imports: [ RouterLink ],
   templateUrl: './nav.component.html',
-  styleUrl: './nav.component.css',
-  providers: [ AuthService ]
+  styleUrl: './nav.component.css'
 })
-export class NavComponent implements OnChanges, OnInit{
+export class NavComponent implements OnInit, OnDestroy{
   isLoggedIn: boolean;
   user: any;
 
-  constructor(private authService: AuthService){
-    this.isLoggedIn = authService.isLoggedIn();
-    // this.user = authService.user.
-    // console.log(this.isLoggedIn)
-  }
+  constructor(private authService: AuthService){}
 
   ngOnInit(): void {
-    this.authService.globalUser.subscribe(value => {
-      console.log(value)
+    this.authService.user.subscribe(value => {
       this.user = value;
+      // this.authService.setUser(this.user)
+      this.isLoggedIn = Object.keys(this.user).length > 0;
     });
-
-    console.log(this.user)
   }
 
-  ngOnChanges(changes: any): void{
-    console.log("changes")
+  ngOnDestroy() {
+    this.authService.user.unsubscribe()
   }
 
   logout() {

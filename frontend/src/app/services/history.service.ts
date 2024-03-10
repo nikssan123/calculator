@@ -9,11 +9,10 @@ export class HistoryService {
   constructor(private http: HttpClient) { }
 
   saveEquation(userId: string, equation: string) {
-    console.log("hello")
-    return this.http.post(this.BASE_URL += userId, {equation});
+    return this.http.post(this.BASE_URL + userId, {equation});
   }
 
   getEquations(userId: string) {
-    return this.http.get(this.BASE_URL += userId);
+    return this.http.get(this.BASE_URL + userId);
   }
 }

@@ -5,7 +5,7 @@
         <li routerLink="/history">History</li>
         @if (!isLoggedIn) {
             <li routerLink="/login">Login</li>
-            <li routerLink="/register">Register</li>
+            <!-- <li routerLink="/register">Register</li> -->
         }@else {
             <li (click)="logout()">Logout</li>
         }

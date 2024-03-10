@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavComponent } from "./nav/nav.component";
+import { AuthService } from './services/auth.service';
 
 @Component({
 	selector: 'app-root',
@@ -9,5 +10,11 @@ import { NavComponent } from "./nav/nav.component";
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+	constructor(private authService: AuthService){}
+
+	ngOnInit(): void {
+		this.authService.tryLocalSignin();
+	}
 }

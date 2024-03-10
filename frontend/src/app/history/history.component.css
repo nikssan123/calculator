@@ -1,0 +1,6 @@
+.history{
+    width: 30vw;
+    height: 60vh;
+    background-color: #363636;
+    overflow: scroll;
+}

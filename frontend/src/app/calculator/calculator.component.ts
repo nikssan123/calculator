@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Actions } from "../constants";
+import { HistoryService } from '../services/history.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-calculator',
@@ -9,12 +11,14 @@ import { Actions } from "../constants";
   styleUrl: './calculator.component.css'
 })
 export class CalculatorComponent {
-  currValue:string = "0";
+  	currValue:string = "0";
 	private prevValue: number = null;
 	private isActionPressed = false;
 	private lastAction = "";
 	equation = "";
 	Actions = Actions;
+
+	constructor(private historyService: HistoryService, private authService: AuthService) {}
 
 	pickNumber(num: string) {
 		// this.currValue = num;
@@ -51,7 +55,8 @@ export class CalculatorComponent {
 				break;
 			case Actions.CALC:
 				this.equation += ` ${this.lastAction} ${this.currValue}`
-				this.calculate(this.lastAction);
+				const result = this.calculate(this.lastAction);
+				this.saveEquation(result);
 				this.prevValue = null;
 				this.equation = "";
 				break;
@@ -92,5 +97,16 @@ export class CalculatorComponent {
 		this.equation += ` ${this.lastAction} ${this.currValue}`;
 		this.prevValue = parseFloat(this.calculate(this.lastAction));
 		this.lastAction = action;
+	}
+
+	private saveEquation(result: string) {
+		if(this.authService.isLoggedIn()){
+			const userId = this.authService.getUser()["id"];
+			this.historyService.saveEquation(userId, this.equation += ` = ${result}` ).subscribe(() => {
+				console.log("successful save");
+			});
+		}
+
+		return;
 	}
 }
