@@ -12,9 +12,9 @@
     }
     <form class="form" [formGroup]="form">
         @if(error.invalid){
-            <div>All fields are required</div>
+            <div class="error">All fields are required</div>
         }@else if (error.api) {
-            <div>Wrong email or password</div>
+            <div class="error">Wrong email or password</div>
         }
         <div class="control">
             <label for="email">Email</label>
