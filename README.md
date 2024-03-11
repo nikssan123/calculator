@@ -1,6 +1,6 @@
 # Requirements
-Node Version > 18
-Angular CLI (ng) > 17
+Node Version >= 18
+Angular CLI (ng) >= 17
 
 # How to Start
 ```bash
