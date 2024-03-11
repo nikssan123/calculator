@@ -9,7 +9,7 @@
     font-size: 20px;
 }
 
-.calculator .screen{
+.calculator .screen {
     height: 10vh;
     border-left: 1px solid black;
     border-bottom: 1px solid black;
@@ -20,7 +20,7 @@
     padding-right: 20px;
 }
 
-.calculator .calculate{
+.calculator .calculate {
     height: 10vh;
     border-left: 1px solid black;
     display: flex;
@@ -29,7 +29,7 @@
     align-items: center;
 }
 
-.calculator .delete{
+.calculator .delete {
     height: 10vh;
     border-left: 1px solid black;
     border-bottom: 1px solid black;
@@ -75,4 +75,8 @@
 #zero {
     /* flex: 2; */
     padding-right: 1px;
+}
+
+.active {
+    background-color: #ffbf66 !important;
 }

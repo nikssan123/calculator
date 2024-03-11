@@ -2,11 +2,12 @@ import { Component } from "@angular/core";
 import { Actions } from "../constants";
 import { HistoryService } from "../services/history.service";
 import { AuthService } from "../services/auth.service";
+import { CommonModule } from "@angular/common";
 
 @Component({
     selector: "app-calculator",
     standalone: true,
-    imports: [],
+    imports: [ CommonModule ],
     templateUrl: "./calculator.component.html",
     styleUrl: "./calculator.component.css",
 })
@@ -17,6 +18,7 @@ export class CalculatorComponent {
     private lastAction = "";
     equation = "";
     Actions = Actions;
+    private lastElement: HTMLElement;
 
     constructor(private historyService: HistoryService, private authService: AuthService) {}
 
@@ -32,7 +34,8 @@ export class CalculatorComponent {
         }
     }
 
-    action(action: string) {
+    action(event: any, action: string) {
+        this.toggleActiveClass(event.target);
         switch (action) {
             case Actions.DIV:
                 this.handleAction(Actions.DIV);
@@ -63,6 +66,15 @@ export class CalculatorComponent {
                 console.log("Not supported");
                 break;
         }
+    }
+
+    private toggleActiveClass(target: HTMLElement) {
+        if (this.lastElement) {
+            this.lastElement.classList.toggle("active");
+        }
+
+        target.classList.toggle("active");
+        this.lastElement = target;
     }
 
     private calculate(action: string): string {
