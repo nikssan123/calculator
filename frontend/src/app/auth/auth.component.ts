@@ -31,7 +31,6 @@ export class AuthComponent {
         if (this.route.snapshot.url[0].path === "register") {
             this.register = true;
         }
-        // console.log(this.route.snapshot.url[0])
 
         this.form = fb.group({
             email: [ "", Validators.required ],

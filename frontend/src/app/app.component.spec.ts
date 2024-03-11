@@ -1,31 +1,54 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { AppComponent } from "./app.component";
+import { AuthService } from "./services/auth.service";
+import { ActivatedRoute } from "@angular/router";
+import { of } from "rxjs";
 
-describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AppComponent],
-    }).compileComponents();
-  });
+describe("AppComponent", () => {
+    let fixture: ComponentFixture<AppComponent>;
+    let mockAuthService = {
+        tryLocalSignin: () => {},
+        user: of({ id: "123", token: "123", email: "test", username: "132" }),
+    };
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+    let mockRoute = {
+        snapshot: {
+            url: [
+                {
+                    path: "/",
+                },
+            ],
+        },
+    };
 
-  it(`should have the 'frontend' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    // expect(app.title).toEqual('frontend');
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [ AppComponent ],
+            providers: [
+                {
+                    provide: AuthService,
+                    useValue: mockAuthService,
+                },
+                {
+                    provide: ActivatedRoute,
+                    useValue: mockRoute,
+                },
+            ],
+        }).compileComponents();
 
-  // TODO: write tests
+        fixture = TestBed.createComponent(AppComponent);
+    });
 
-  // it('should render title', () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   fixture.detectChanges();
-  //   const compiled = fixture.nativeElement as HTMLElement;
-  //   expect(compiled.querySelector('h1')?.textContent).toContain('Hello, frontend');
-  // });
+    it("should create the app", () => {
+        const app = fixture.componentInstance;
+        expect(app).toBeTruthy();
+    });
+
+    it("should call tryLocalSignin on initialization", () => {
+        const mockLocalSignin = spyOn(mockAuthService, "tryLocalSignin").and.stub();
+
+        fixture.detectChanges();
+
+        expect(mockLocalSignin).toHaveBeenCalled();
+    });
 });

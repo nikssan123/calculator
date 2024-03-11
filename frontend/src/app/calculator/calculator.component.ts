@@ -35,7 +35,7 @@ export class CalculatorComponent {
     }
 
     action(event: any, action: string) {
-        this.toggleActiveClass(event.target);
+        if (event) this.toggleActiveClass(event.target);
         switch (action) {
             case Actions.DIV:
                 this.handleAction(Actions.DIV);
@@ -86,6 +86,9 @@ export class CalculatorComponent {
             case Actions.MULT:
                 return (this.currValue = (parseFloat(this.currValue) * this.prevValue).toString());
             case Actions.DIV:
+                if (parseFloat(this.currValue) === 0) {
+                    this.currValue = "NaN";
+                }
                 return (this.currValue = (this.prevValue / parseFloat(this.currValue)).toString());
             default:
                 return "Not supported";

@@ -1,76 +1,76 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable, catchError, map, of } from "rxjs";
 import { UserResponse, User } from "../types";
-import { Location } from '@angular/common';
+import { Location } from "@angular/common";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: "root",
 })
 export class AuthService {
-  URL = "http://localhost:8000/api/auth/";
-  user: BehaviorSubject<UserResponse | {}> = new BehaviorSubject({});
+    URL = "http://localhost:8000/api/auth/";
+    user: BehaviorSubject<UserResponse | {}> = new BehaviorSubject({});
 
-  constructor(private http: HttpClient, private location: Location) {}
+    constructor(private http: HttpClient, private location: Location) {}
 
-  login(user: Pick<User, "email" | "password">) {
-    return this.callApi(this.URL + "login", {
-      password: user.password,
-      email: user.email
-    });
-  }
-
-  register(user: User) {
-    return this.callApi(this.URL + "register", {
-      password: user.password,
-      email: user.email,
-      username: user.username
-    });
-  }
-
-  tryLocalSignin() {
-    if(this.isLoggedIn()){
-      const token = localStorage.getItem("token");
-      const id = localStorage.getItem("userId");
-      this.user.next({
-        id,
-        token
-      });
+    login(user: Pick<User, "email" | "password">) {
+        return this.callApi(this.URL + "login", {
+            password: user.password,
+            email: user.email,
+        });
     }
-  }
 
-  callApi(url: string, data: any){
-    // Promise => const res:any = await firstValueFrom(this.http.post("http://localhost:8000/api/auth/login", data))
-    return this.http.post<UserResponse>(url, data)
-      .pipe(
-        map((res:UserResponse) => {
-          this.setToken(res);
-          this.user.next(res);
-          return res;
-        })
-      );
-  }
+    register(user: User) {
+        return this.callApi(this.URL + "register", {
+            password: user.password,
+            email: user.email,
+            username: user.username,
+        });
+    }
 
-  private setToken(res: UserResponse) {
-    localStorage.setItem("token", res.token);
-    localStorage.setItem("userId", res.id);
-  }
+    tryLocalSignin() {
+        if (this.isLoggedIn()) {
+            const token = localStorage.getItem("token");
+            const id = localStorage.getItem("userId");
+            this.user.next({
+                id,
+                token,
+            });
+        }
+    }
 
-  logOut(){
-    localStorage.removeItem("token");
-    this.user.next({});
-    this.location.back();
-  }
+    callApi(url: string, data: any) {
+        // Promise => const res:any = await firstValueFrom(this.http.post("http://localhost:8000/api/auth/login", data))
+        return this.http.post<UserResponse>(url, data).pipe(
+            map((res: UserResponse) => {
+                this.setToken(res);
+                this.user.next(res);
+                return res;
+            })
+        );
+    }
 
-  isLoggedIn(): boolean{
-    return !!localStorage.getItem("token");
-  }
+    private setToken(res: UserResponse) {
+        localStorage.setItem("token", res.token);
+        localStorage.setItem("userId", res.id);
+    }
 
-  setUser(user: UserResponse){
-    this.user.next(user);
-  }
+    logOut() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        this.user.next({});
+        this.location.back();
+    }
 
-  getUser(): UserResponse {
-    return this.user.value as UserResponse;
-  }
+    isLoggedIn(): boolean {
+        return !!localStorage.getItem("token");
+    }
+
+    setUser(user: UserResponse) {
+        this.user.next(user);
+    }
+
+    getUser(): UserResponse {
+        return this.user.value as UserResponse;
+    }
 }

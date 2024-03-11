@@ -1,6 +1,22 @@
-.history{
+.history {
     width: 30vw;
     height: 60vh;
     background-color: #363636;
     overflow: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    background: #363636;
+}
+
+::-webkit-scrollbar-track {
+    background: #363636;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    min-height: 50px;
+    border-radius: 10px;
+    border: 4px solid transparent;
+    background-clip: content-box;
 }
